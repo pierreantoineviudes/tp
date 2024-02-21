@@ -1,3 +1,7 @@
+# adds PA
+*.ilk
+*.pdb
+
 # Prerequisites
 *.d
 
