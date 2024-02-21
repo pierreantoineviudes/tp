@@ -1,6 +1,7 @@
 # adds PA
 *.ilk
 *.pdb
+.venv
 
 # Prerequisites
 *.d
