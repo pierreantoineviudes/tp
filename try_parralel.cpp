@@ -1,12 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <thread>
+using namespace std;
 
-void merge(std::vector<int>& array, int left, int mid, int right) {
+void merge(vector<int>& array, int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
 
-    std::vector<int> L(n1), R(n2);
+    vector<int> L(n1), R(n2);
 
     for (int i = 0; i < n1; ++i)
         L[i] = array[left + i];
@@ -38,14 +39,14 @@ void merge(std::vector<int>& array, int left, int mid, int right) {
     }
 }
 
-void mergeSort(std::vector<int>& array, int left, int right, int depth) {
+void mergeSort(vector<int>& array, int left, int right, int depth) {
     if (left >= right) return;
 
     if (depth <= 0 || right - left <= 1000) { // Limit for number of threads or size of sub-array
         for (int i = left; i <= right; ++i) {
             for (int j = i + 1; j <= right; ++j) {
                 if (array[i] > array[j]) {
-                    std::swap(array[i], array[j]);
+                    swap(array[i], array[j]);
                 }
             }
         }
@@ -54,8 +55,8 @@ void mergeSort(std::vector<int>& array, int left, int right, int depth) {
 
     int mid = left + (right - left) / 2;
 
-    std::thread leftThread(mergeSort, std::ref(array), left, mid, depth - 1);
-    std::thread rightThread(mergeSort, std::ref(array), mid + 1, right, depth - 1);
+    thread leftThread(mergeSort, ref(array), left, mid, depth - 1);
+    thread rightThread(mergeSort, ref(array), mid + 1, right, depth - 1);
 
     leftThread.join();
     rightThread.join();
@@ -63,27 +64,27 @@ void mergeSort(std::vector<int>& array, int left, int right, int depth) {
     merge(array, left, mid, right);
 }
 
-void parallelMergeSort(std::vector<int>& array) {
-    int depth = std::thread::hardware_concurrency(); // Number of available threads
+void parallelMergeSort(vector<int>& array) {
+    int depth = thread::hardware_concurrency(); // Number of available threads
     mergeSort(array, 0, array.size() - 1, depth);
 }
 
 int main() {
-    std::vector<int> arr = {12, 11, 13, 5, 6, 7};
+    vector<int> arr = {12, 11, 13, 5, 6, 7};
 
-    std::cout << "Original array:\n";
+    cout << "Original array:\n";
     for (int num : arr) {
-        std::cout << num << " ";
+        cout << num << " ";
     }
-    std::cout << std::endl;
+    cout << endl;
 
     parallelMergeSort(arr);
 
-    std::cout << "Sorted array:\n";
+    cout << "Sorted array:\n";
     for (int num : arr) {
-        std::cout << num << " ";
+        cout << num << " ";
     }
-    std::cout << std::endl;
+    cout << endl;
 
     return 0;
 }

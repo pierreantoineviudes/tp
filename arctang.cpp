@@ -7,24 +7,30 @@
 #include <cstdlib>
 using namespace std;
 
-double somme_globale = 0.0f;
+double somme_globale = 0.0;
 
-void somme_une_tranche(int tab[], int deb_inclu, int fin_exlue, long &somme_globale)
+void somme_une_tranche(double tab[], int deb_inclu, int fin_exlue, long &somme_globale)
 {
-    double somme_locale = 0.0f;
+    double somme_locale = 0.00000000;
+    cout << "some localce : " << somme_locale << endl;
     for (int i = deb_inclu; i < fin_exlue; i++)
     {
         somme_locale += tab[i];
+        // cout << "tab[i]" << tab[i] << endl;
+        // cout << "somme_locale update  : " << somme_locale << endl;
     }
-    somme_globale += somme_locale;
+    somme_globale += somme_locale / taille_tableau;
+    cout << "comme locale ! " << somme_locale / taille_tableau << endl;
 }
 
 int main()
 {
-    int tab[taille_tableau];
+    double tab[taille_tableau];
     for (int i = 0; i < taille_tableau; i++)
     {
-        tab[i] = i + 1;
+        double term = 1.0 + pow((i + 0.5) / taille_tableau, 2);
+        tab[i] = 4.0 / term;
+        // cout << "4.0 / term : " << 4.0 / term << endl;
     }
 
     for (int nb_threads = 1; nb_threads < MAX_THREADS; nb_threads++)
@@ -50,6 +56,6 @@ int main()
     }
 
     cout << "(Controle : la somme devrait etre ";
-    cout << (long)taille_tableau * (taille_tableau + 1) / 2 << ")\n";
+    cout << M_PI << ")\n";
     return 0;
 }
