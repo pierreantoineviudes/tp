@@ -2,6 +2,7 @@
 *.ilk
 *.pdb
 .venv
+.vscode
 
 # Prerequisites
 *.d
