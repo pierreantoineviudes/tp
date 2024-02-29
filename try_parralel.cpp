@@ -42,17 +42,6 @@ void merge(vector<int>& array, int left, int mid, int right) {
 void mergeSort(vector<int>& array, int left, int right, int depth) {
     if (left >= right) return;
 
-    if (depth <= 0 || right - left <= 1000) { // Limit for number of threads or size of sub-array
-        for (int i = left; i <= right; ++i) {
-            for (int j = i + 1; j <= right; ++j) {
-                if (array[i] > array[j]) {
-                    swap(array[i], array[j]);
-                }
-            }
-        }
-        return;
-    }
-
     int mid = left + (right - left) / 2;
 
     thread leftThread(mergeSort, ref(array), left, mid, depth - 1);
